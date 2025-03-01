@@ -1,0 +1,97 @@
+
+html, body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; 
+}
+
+
+.navbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background: #F6A7B9; 
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-sizing: border-box; 
+}
+
+
+.navbar .logo {
+  height: 90px; 
+  width: auto;
+  padding : 0px;
+  margin-left: 0px;
+  margin-right: 20px; 
+}
+
+
+.navbar ul {
+  list-style-type: none;
+  display: flex;
+  gap: 160px; 
+  margin: 0;
+  padding: 0;
+  flex-grow: 1; 
+  justify-content: center;
+  box-sizing: border-box; 
+}
+
+
+.navbar ul li {
+  color: #5C4033;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+
+.navbar ul li:hover {
+  color: #f0f0f0;
+}
+
+
+.navbar .search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar .search-box input {
+  padding: 5px 10px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  width: 200px;
+  transition: width 0.3s ease;
+}
+
+
+.navbar .search-box input:focus {
+  width: 250px;
+}
+
+
+.navbar .search-box img {
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+}
+
+.login-button {
+  background-color: white;
+  color: #5C4033;
+  border-radius: 20px;
+  border: 2px solid #5C4033;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: bold;
+  white-space: nowrap;
+  width: auto;
+}
+
+
