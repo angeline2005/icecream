@@ -290,6 +290,8 @@ export const Customize = ({ movable }) => {
               >
                 {category.type}
               </p>
+              {console.log(path)}
+              <img src=""></img>
               <div className="row">
                 {category.icecreams?.map((iceCream) => (
                   <div key={iceCream.id} className="col">
