@@ -20,7 +20,6 @@ export const AddNew = () => {
     formData.append("available", available);
     formData.append("image", image);
 
-    // TODO: Replace with your API URL and axios/fetch call
     try {
       const res = await axios.post(
         "http://localhost:5000/api/customizes",
