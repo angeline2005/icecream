@@ -1,7 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import loginbg from "./loginbg.png";
+import axios from "axios";
 
 export const AddNew = () => {
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState("");
+  const [available, setAvailable] = useState(false);
+  const [image, setImage] = useState(null);
+
+  const handleSubmit = async () => {
+    if (!image || !title || !price) {
+      alert("Please fill all fields including image.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("price", price);
+    formData.append("available", available);
+    formData.append("image", image);
+
+    // TODO: Replace with your API URL and axios/fetch call
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/api/customizes",
+        formData
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div
       style={{
@@ -20,16 +49,17 @@ export const AddNew = () => {
           marginLeft: "600px",
           marginTop: "100px",
           width: "600px",
-          height: "500px",
+          height: "auto",
           backgroundColor: "rgba(255, 182, 193, 0.7)",
           borderRadius: "10px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
+          padding: "20px",
           transition: "transform 0.5s ease",
         }}
-        onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.2)")}
+        onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
         onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
       >
         <div
@@ -47,6 +77,8 @@ export const AddNew = () => {
         <input
           type="text"
           placeholder="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           style={{
             width: "80%",
             padding: "10px",
@@ -60,6 +92,8 @@ export const AddNew = () => {
         <input
           type="text"
           placeholder="Price"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
           style={{
             width: "80%",
             padding: "10px",
@@ -71,8 +105,9 @@ export const AddNew = () => {
           }}
         />
         <input
-          type="text"
-          placeholder="Upload Image"
+          type="file"
+          accept="image/*"
+          onChange={(e) => setImage(e.target.files[0])}
           style={{
             width: "80%",
             padding: "10px",
@@ -81,37 +116,47 @@ export const AddNew = () => {
             borderRadius: "5px",
             fontSize: "16px",
             outline: "none",
+            backgroundColor: "white",
           }}
         />
 
-        
+        {image && (
+          <img
+            src={URL.createObjectURL(image)}
+            alt="Preview"
+            style={{
+              width: "150px",
+              marginTop: "10px",
+              borderRadius: "10px",
+              border: "2px solid white",
+            }}
+          />
+        )}
+
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "8px", 
+            gap: "8px",
             marginTop: "10px",
-            justifyContent: "center", 
+            justifyContent: "center",
           }}
         >
           <input
             type="checkbox"
             id="availability"
+            checked={available}
+            onChange={(e) => setAvailable(e.target.checked)}
             style={{
               width: "20px",
               height: "20px",
               cursor: "pointer",
-              appearance: "none", 
+              appearance: "none",
               border: "2px solid pink",
               borderRadius: "5px",
-              backgroundColor: "white",
+              backgroundColor: available ? "pink" : "white",
               position: "relative",
             }}
-            onChange={(e) =>
-              (e.target.style.backgroundColor = e.target.checked
-                ? "pink"
-                : "white")
-            }
           />
           <label
             htmlFor="availability"
@@ -141,6 +186,7 @@ export const AddNew = () => {
           onMouseLeave={(e) =>
             (e.currentTarget.style.backgroundColor = "white")
           }
+          onClick={handleSubmit}
         >
           Add
         </button>

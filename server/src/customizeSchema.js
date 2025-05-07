@@ -3,7 +3,7 @@ const mongoose = require("./database");
 const customizeSchema = new mongoose.Schema({
   id: Number,
   price: Number,
-  img: String,
+  img: String, // will store base64 image
   title: String,
   availability: String,
   selected: Boolean,
