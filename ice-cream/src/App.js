@@ -5,13 +5,14 @@ import { MainPage } from "./MainPage";
 import { Customize } from "./Customize";
 import { Branded } from "./Branded";
 import Footer from "./Footer";
-import  AddToCart  from "./AddToCart";
+import AddToCart from "./AddToCart";
 import { LoginMainPage } from "./LoginMainPage";
 import { LoginPage } from "./LoginPage";
 import { AddNew } from "./AddNew";
 import { Modify } from "./Modify";
-function App() {
+import ViewPhotos from "./ViewPhotos"
 
+function App() {
   const [resultantArray, setResultantArray] = useState([]);
   const updateResultantArray = (newItems) => {
     setResultantArray((prevArray) => [
@@ -20,11 +21,10 @@ function App() {
     ]);
   };
 
-  const [cartItems, setCartItems] = useState([]); 
+  const [cartItems, setCartItems] = useState([]);
   const movable = (finalSelection) => {
     setCartItems((prevCart) => [...prevCart, finalSelection]);
   };
-
 
   return (
     <Router>
@@ -37,6 +37,7 @@ function App() {
             element={<Branded updateResultantArray={updateResultantArray} />}
           />
           <Route path="/footer" element={<Footer />} />
+          <Route path="/uploads" element={<ViewPhotos />} />
           <Route
             path="/addtocart"
             element={
