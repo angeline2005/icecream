@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import loginbg from "./loginbg.png";  // Assuming you have a background image
+import loginbg from "./loginbg.png"; // Assuming you have a background image
 
 const ViewPhotos = () => {
   const [items, setItems] = useState([]);
@@ -14,7 +14,10 @@ const ViewPhotos = () => {
         );
         setItems(response.data);
       } catch (err) {
-        console.error("Error fetching items:", err.response?.data || err.message);
+        console.error(
+          "Error fetching items:",
+          err.response?.data || err.message,
+        );
         alert("Failed to fetch uploaded items");
       }
     };
@@ -69,4 +72,3 @@ const ViewPhotos = () => {
 };
 
 export default ViewPhotos;
-

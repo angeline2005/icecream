@@ -10,7 +10,7 @@ import { LoginMainPage } from "./LoginMainPage";
 import { LoginPage } from "./LoginPage";
 import { AddNew } from "./AddNew";
 import { Modify } from "./Modify";
-import ViewPhotos from "./ViewPhotos"
+import ViewPhotos from "./ViewPhotos";
 
 function App() {
   const [resultantArray, setResultantArray] = useState([]);
