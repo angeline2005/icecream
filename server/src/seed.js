@@ -8,7 +8,7 @@ const iceCreamCategories = [
       {
         id: 1,
         price: 5,
-        img: "/ice-cream/src/ex_gelato",
+        img: "ex_gelato.png",
         title: "Chocolate Gelato",
         availability: "Available",
         selected: false,
@@ -16,7 +16,7 @@ const iceCreamCategories = [
       {
         id: 2,
         price: 5,
-        img: "/ice-cream/src/ex_gelato",
+        img: "ex_gelato.png",
         title: "Chocolate Gelato",
         availability: "Available",
         selected: false,
@@ -24,7 +24,7 @@ const iceCreamCategories = [
       {
         id: 3,
         price: 15,
-        img: "/ice-cream/src/ex_gelato",
+        img: "ex_gelato.png",
         title: "Chocolate Gelato",
         availability: "Available",
         selected: false,
@@ -37,7 +37,7 @@ const iceCreamCategories = [
       {
         id: 4,
         price: 50,
-        img: "/ice-cream/src/ex_gelato",
+        img: "ex_gelato.png",
         title: "Mango Sorbet",
         availability: "Available",
         selected: false,
@@ -45,7 +45,7 @@ const iceCreamCategories = [
       {
         id: 5,
         price: 40,
-        img: "/ice-cream/src/ex_gelato",
+        img: "ex_gelato.png",
         title: "Chocolate Gelato",
         availability: "Available",
         selected: false,
@@ -53,7 +53,7 @@ const iceCreamCategories = [
       {
         id: 6,
         price: 60,
-        img: "/ice-cream/src/ex_gelato",
+        img: "ex_gelato.png",
         title: "Chocolate Gelato",
         availability: "Available",
         selected: false,
@@ -65,21 +65,21 @@ const iceCreamCategories = [
     icecreams: [
       {
         id: 7,
-        img: "/ice-cream/src/ex_gelato",
+        img: "ex_gelato.png",
         title: "Blueberry Yogurt",
         availability: "Available",
         selected: false,
       },
       {
         id: 8,
-        img: "/ice-cream/src/ex_gelato",
+        img: "ex_gelato.png",
         title: "Chocolate Gelato",
         availability: "Available",
         selected: false,
       },
       {
         id: 9,
-        img: "/ice-cream/src/ex_gelato",
+        img: "ex_gelato.png",
         title: "Chocolate Gelato",
         availability: "Available",
         selected: false,
@@ -91,21 +91,21 @@ const iceCreamCategories = [
     icecreams: [
       {
         id: 10,
-        img: "/ice-cream/src/ex_gelato",
+        img: "ex_gelato.png",
         title: "Chocolate Soft Serve",
         availability: "Available",
         selected: false,
       },
       {
         id: 11,
-        img: "/ice-cream/src/ex_gelato",
+        img: "ex_gelato.png",
         title: "Chocolate Gelato",
         availability: "Available",
         selected: false,
       },
       {
         id: 12,
-        img: "/ice-cream/src/ex_gelato",
+        img: "ex_gelato.png",
         title: "Chocolate Gelato",
         availability: "Available",
         selected: false,
