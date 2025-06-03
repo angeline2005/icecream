@@ -1,21 +1,20 @@
-const mongoose = require("./database");
+const mongoose = require("mongoose");
 
-const customizeSchema = new mongoose.Schema({
-  id: Number,
-  price: Number,
-  img: String, // will store base64 image
-  title: String,
-  availability: String,
-  selected: Boolean,
+const userSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  password: String,
+  employeeCode: String,
+  items: [{
+    title: String,
+    price: String,
+    available: Boolean,
+    imageUrl: String,
+    createdAt: {
+      type: Date,
+      default: Date.now
+    }
+  }]
 });
 
-const customizeCategorySchema = new mongoose.Schema(
-  {
-    type: String,
-    icecreams: [customizeSchema],
-  },
-  { collection: "customizes" }
-);
-
-const customize = mongoose.model("customize", customizeCategorySchema);
-module.exports = customize;
+module.exports = mongoose.model("User", userSchema);

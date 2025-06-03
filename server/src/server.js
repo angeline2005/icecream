@@ -1,85 +1,92 @@
 const express = require("express");
 const cors = require("cors");
-const mongoose = require("./database"); // Assuming you have a separate database connection file
-const Customize = require("./customizeSchema"); // Assuming you have a Mongoose schema for Customize
-const multer = require("multer");
+const mongoose = require("mongoose");
+const User = require("./customizeSchema");
+const Item = require("./customizeSchema"); // NEW
 
 const app = express();
-app.use(cors({ origin: "http://localhost:3000" }));
+
+mongoose.connect("mongodb://127.0.0.1:27017/icecreamDB", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log("MongoDB Connected"))
+.catch(err => console.error("MongoDB connection error:", err));
+
+app.use(cors());
 app.use(express.json());
 
-// Multer setup for file handling
-const storage = multer.memoryStorage(); // stores file in memory
-const upload = multer({
-  storage,
-  fileFilter: (req, file, cb) => {
-    const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
-    if (!allowedTypes.includes(file.mimetype)) {
-      return cb(new Error("Only image files are allowed"));
+// ✅ Signup Route (unchanged)
+app.post("/api/signup", async (req, res) => {
+  try {
+    const { name, email, password, employeeCode } = req.body;
+    const user = new User({ name, email, password, employeeCode });
+    await user.save();
+    res.status(201).json({ message: "User registered successfully" });
+  } catch (err) {
+    console.error("Signup error:", err);
+    res.status(500).json({ message: "Signup failed", error: err.message });
+  }
+});
+
+// ✅ Login Route (unchanged)
+app.post("/api/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email, password });
+
+    if (user) {
+      res.status(200).json({ 
+        success: true, 
+        message: "Login successful"
+      });
+    } else {
+      res.status(401).json({ success: false, message: "Invalid credentials" });
     }
-    cb(null, true);
-  },
-});
-
-// Upload route for customizing ice cream
-app.post("/api/customizes", upload.single("image"), async (req, res) => {
-  try {
-    const { title, price, available } = req.body;
-    const imageBuffer = req.file.buffer;
-    const imageBase64 = imageBuffer.toString("base64");
-
-    const newCustomize = new Customize({
-      type: "default", // or use your own logic
-      icecreams: [
-        {
-          id: Date.now(), // or any unique logic
-          title,
-          price,
-          img: imageBase64,
-          availability: available === "true" ? "yes" : "no",
-          selected: false,
-        },
-      ],
+  } catch (err) {
+    console.error("Login error:", err);
+    res.status(500).json({ 
+      success: false, 
+      message: "Login failed", 
+      error: err.message 
     });
-
-    await newCustomize.save();
-    res.status(201).json({ message: "Upload successful", data: newCustomize });
-  } catch (err) {
-    console.error("Upload error:", err);
-    res.status(500).json({ message: "Upload failed", error: err.message });
   }
 });
 
-// GET all individual ice cream photo entries
-app.get("/api/customizes/photos", async (req, res) => {
+// ✅ Add new item (no userId now)
+app.post("/api/customizes", async (req, res) => {
   try {
-    const all = await Customize.find();
-    const allPhotos = all.flatMap((doc) =>
-      doc.icecreams.map((item) => ({
-        title: item.title,
-        price: item.price,
-        available: item.availability === "yes",
-        imageBase64: item.img,
-      })),
-    );
-    res.json(allPhotos);
+    const { title, price, available, imageUrl } = req.body;
+
+    const newItem = new Item({ title, price, available, imageUrl });
+    await newItem.save();
+
+    res.status(201).json({ 
+      message: "Item added successfully", 
+      item: newItem 
+    });
   } catch (err) {
-    console.error("Fetch error:", err);
-    res
-      .status(500)
-      .json({ message: "Failed to fetch photos", error: err.message });
+    console.error("Add item error:", err);
+    res.status(500).json({ 
+      message: "Failed to add item", 
+      error: err.message 
+    });
   }
 });
 
-// GET route remains unchanged
+// ✅ Get all items
 app.get("/api/customizes", async (req, res) => {
   try {
-    const customizes = await Customize.find();
-    res.json(customizes);
-  } catch (error) {
-    res.status(500).json({ message: "error", error });
+    const items = await Item.find();
+    res.status(200).json({ items });
+  } catch (err) {
+    console.error("Get items error:", err);
+    res.status(500).json({ 
+      message: "Failed to get items", 
+      error: err.message 
+    });
   }
 });
 
-const PORT = 5000;
+const PORT = 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

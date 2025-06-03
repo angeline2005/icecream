@@ -4,30 +4,38 @@ import axios from "axios";
 
 export const AddNew = () => {
     const [title, setTitle] = useState("");
-    const [price, setPrice] = useState("");
-    const [available, setAvailable] = useState(false);
-    const [image, setImage] = useState(null);
+const [price, setPrice] = useState("");
+const [available, setAvailable] = useState(false);
+const [imageUrl, setImageUrl] = useState("");
 
-    const handleSubmit = async () => {
-        if (!image || !title || !price) {
-            alert("Please fill all fields including image.");
-            return;
-        }
+const handleSubmit = async () => {
+    if (!title || !price || !imageUrl) {
+        alert("Please fill all fields including image URL.");
+        return;
+    }
 
-        const formData = new FormData();
-        formData.append("title", title);
-        formData.append("price", price);
-        formData.append("image", image);
+    try {
+        const response = await axios.post("http://localhost:5001/api/customizes", {
+            title,
+            price,
+            available,
+            imageUrl
+        });
 
-        try {
-            const response = await axios.post("http://localhost:5000/api/customizes", formData);
-            console.log("Upload successful:", response.data);
-            alert("Upload successful");
-        } catch (err) {
-            console.error("Upload error:", err.response?.data || err.message);
-            alert("Upload failed");
-        }
-    };
+        console.log("Item added successfully:", response.data);
+        alert("Item added successfully");
+
+        // Reset form
+        setTitle("");
+        setPrice("");
+        setImageUrl("");
+        setAvailable(false);
+    } catch (err) {
+        console.error("Error adding item:", err.response?.data || err.message);
+        alert("Failed to add item");
+    }
+};
+
 
     return (
         <div
@@ -103,9 +111,10 @@ export const AddNew = () => {
                     }}
                 />
                 <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setImage(e.target.files[0])}
+                    type="text"
+                    placeholder="Image URL"
+                    value={imageUrl}
+                    onChange={(e) => setImageUrl(e.target.value)}
                     style={{
                         width: "80%",
                         padding: "10px",
@@ -114,19 +123,21 @@ export const AddNew = () => {
                         borderRadius: "5px",
                         fontSize: "16px",
                         outline: "none",
-                        backgroundColor: "white",
                     }}
                 />
 
-                {image && (
+                {imageUrl && (
                     <img
-                        src={URL.createObjectURL(image)}
+                        src={imageUrl}
                         alt="Preview"
                         style={{
                             width: "150px",
                             marginTop: "10px",
                             borderRadius: "10px",
                             border: "2px solid white",
+                        }}
+                        onError={(e) => {
+                            e.target.src = "https://via.placeholder.com/150";
                         }}
                     />
                 )}

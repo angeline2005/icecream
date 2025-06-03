@@ -10,6 +10,7 @@ import { LoginMainPage } from "./LoginMainPage";
 import { LoginPage } from "./LoginPage";
 import { AddNew } from "./AddNew";
 import { Modify } from "./Modify";
+import { Signup } from './Signup';
 import ViewPhotos from "./ViewPhotos";
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
           />
           <Route path="/loginmainpage" element={<LoginMainPage />} />
           <Route path="/loginpage" element={<LoginPage />} />
+          <Route path="/Signup" element={<Signup />} />
           <Route path="/addnew" element={<AddNew />} />
           <Route path="/Modify" element={<Modify />} />
         </Routes>
